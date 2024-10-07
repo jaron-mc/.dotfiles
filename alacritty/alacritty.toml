@@ -1,0 +1,25 @@
+# Set theme
+import = [ "~/alacritty-theme/themes/tokyo-night.toml" ]
+
+[font]
+size = 14.0
+
+[font.bold]
+family = "JetBrains Mono NL"
+style = "Bold"
+
+[font.bold_italic]
+family = "JetBrains Mono NL"
+style = "Bold Italic"
+
+[font.italic]
+family = "JetBrains Mono NL"
+style = "Bold Italic"
+
+[font.normal]
+family = "JetBrains Mono NL"
+style = "Regular"
+
+[window]
+opacity = 0.75
+
