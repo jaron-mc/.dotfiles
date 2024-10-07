@@ -1,3 +1,6 @@
+# Set theme
+import = [ "~/alacritty-theme/themes/tokyo-night.toml" ]
+
 [font]
 size = 14.0
 
@@ -19,3 +22,4 @@ style = "Regular"
 
 [window]
 opacity = 0.75
+

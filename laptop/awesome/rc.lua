@@ -14,6 +14,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local menubar = require("menubar")
 local hotkeys_popup = require("awful.hotkeys_popup")
+local deficient = require("deficient")
 -- Enable hotkeys help widget for VIM and other apps
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
@@ -47,6 +48,8 @@ end
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_themes_dir() .. "zenburn/theme.lua")
 
+beautiful.font = "JetBrains Mono 14"
+
 -- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
 editor = os.getenv("EDITOR") or "nvim"
@@ -78,7 +81,10 @@ myawesomemenu = {
    { "quit", function() awesome.quit() end },
 }
 
+beautiful.hotkeys_font = "JetBrains Mono 14"
+
 -- Customize right-click menu
+beautiful.menu_font = "JetBrains Mono 14"
 beautiful.menu_height=25
 beautiful.menu_width=180
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
@@ -156,6 +162,12 @@ end
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Instanciate battery widget
+local battery_widget = deficient.battery_widget {
+    -- pass options here
+    widget_font = "JetBrains Mono 14"
+}
+
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
     set_wallpaper(s)
@@ -189,7 +201,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s,
-        height = 25})
+        height = 35})
 
   -- Add widgets to the wibox
     s.mywibox:setup {
@@ -203,7 +215,7 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
+            battery_widget,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -329,7 +341,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey, "Shift"   }, "c",      function (c) c:kill()                         end,
+    awful.key({ modkey,   }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
@@ -559,7 +571,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 
 -- Startup programs
 awful.spawn.with_shell("picom -b --config $HOME/.config/picom/picom.conf")
-awful.spawn.with_shell("feh --bg-scale ~/Downloads/wallpaper.jpeg")
+awful.spawn.with_shell("feh --bg-scale ~/wallpapers/space.jpg")
 
 -- Add gaps between windows
 beautiful.useless_gap=5
